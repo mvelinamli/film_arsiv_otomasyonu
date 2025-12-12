@@ -1,14 +1,10 @@
 import json
 import os
-import time
-from abc import ABC, abstractmethod
 
-# --- ÖNCEKİ TEMEL SINIFLAR (AYNEN KORUNDU) ---
+class IPuanlanabilir():     #abstract class
 
-class IPuanlanabilir(ABC):
-    @abstractmethod
     def puan_ver(self, puan): pass
-    @abstractmethod
+
     def ortalama_puan_getir(self): pass
 
 class Icerik(IPuanlanabilir):
@@ -28,7 +24,7 @@ class Icerik(IPuanlanabilir):
         if not self._puanlar: return 0.0
         return sum(self._puanlar) / len(self._puanlar)
 
-    @abstractmethod
+
     def bilgi_getir(self): pass
 
     def veri_hazirla(self):
@@ -122,39 +118,35 @@ class VeriYoneticisi:
         except FileNotFoundError:
             return []
 
-# --- YENİ EKLENEN KISIM: KULLANICI ARAYÜZÜ ---
-
 class Uygulama:
     def __init__(self):
         self.dosya_adi = "arsiv.json"
         self.yonetici = VeriYoneticisi(self.dosya_adi)
         self.arsiv = self.yonetici.yukle()
         print("Veriler yükleniyor...")
-        time.sleep(1)
 
     def ekran_temizle(self):
-        # İşletim sistemine göre terminali temizler (Windows: cls, Mac/Linux: clear)
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def menu_goster(self):
         self.ekran_temizle()
         print("="*40)
-        print("   🎬 FİLM & DİZİ ARŞİV SİSTEMİ 🎬")
+        print("   FİLM & DİZİ ARŞİV SİSTEMİ")
         print("="*40)
         print(f"Mevcut İçerik Sayısı: {len(self.arsiv)}")
         print("-" * 40)
-        print("1. 📜 Tüm İçerikleri Listele")
-        print("2. ➕ Yeni Film Ekle")
-        print("3. ➕ Yeni Dizi Ekle")
-        print("4. ⭐ Bir İçeriğe Puan Ver")
-        print("5. 💾 Kaydet ve Çık")
+        print("1. Tüm İçerikleri Listele")
+        print("2. Yeni Film Ekle")
+        print("3. Yeni Dizi Ekle")
+        print("4. Bir İçeriğe Puan Ver")
+        print("5. Kaydet ve Çık")
         print("="*40)
 
     def listele(self):
         self.ekran_temizle()
         print("--- ARŞİVDEKİ İÇERİKLER ---")
         if not self.arsiv:
-            print("📭 Arşiv henüz boş.")
+            print("Arşiv henüz boş.")
         else:
             for icerik in self.arsiv:
                 # Polimorfizm: Film ise film bilgisi, dizi ise dizi bilgisi gelir
@@ -198,15 +190,13 @@ class Uygulama:
             print("\n✔ Dizi başarıyla eklendi!")
         except ValueError:
             print("\n✖ HATA: Lütfen sayısal değerleri doğru giriniz.")
-        
-        time.sleep(1.5)
 
     def puan_ver(self):
         self.ekran_temizle()
         print("--- PUAN VERME EKRANI ---")
         if not self.arsiv:
             print("Puan verilecek içerik yok.")
-            time.sleep(1)
+
             return
 
         # İçerikleri numaralı listele
@@ -223,8 +213,6 @@ class Uygulama:
                 print("✖ Geçersiz seçim.")
         except ValueError:
             print("✖ Hatalı giriş.")
-        
-        time.sleep(1.5)
 
     def calistir(self):
         """Uygulamanın ana döngüsü"""
@@ -246,7 +234,6 @@ class Uygulama:
                 break
             else:
                 print("Lütfen geçerli bir seçim yapınız.")
-                time.sleep(1)
 
 # --- PROGRAMI BAŞLAT ---
 if __name__ == "__main__":
