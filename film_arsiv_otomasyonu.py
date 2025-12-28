@@ -1,7 +1,7 @@
 import json
 import os
 
-class IPuanlanabilir():     #abstract class
+class IPuanlanabilir():     #interface 
 
     def puan_ver(self, puan): pass
 
@@ -86,7 +86,7 @@ class Dizi(Icerik):
 
 class VeriYoneticisi:
     def __init__(self, dosya_adi):
-        self.__dosya_adi = dosya_adi
+        self._dosya_adi = dosya_adi
 
     def kaydet(self, liste):
         try:
@@ -234,6 +234,6 @@ class Uygulama:
                 print("Lütfen geçerli bir seçim yapınız.")
 
 # --- PROGRAMI BAŞLAT ---
-if __name__ == "__main__":
-    app = Uygulama()
-    app.calistir()
+
+app = Uygulama()
+app.calistir()
