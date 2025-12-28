@@ -170,8 +170,6 @@ class Uygulama:
             print("\n✔ Film başarıyla eklendi!")
         except ValueError:
             print("\n✖ HATA: Yıl, süre veya bütçe için sayı girmelisiniz!")
-        
-        time.sleep(1.5)
 
     def dizi_ekle(self):
         self.ekran_temizle()
